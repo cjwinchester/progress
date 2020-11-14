@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <title>Progress? Progress!</title>
+    <link rel="shortcut icon" href="https://codywinchester.com/assets/media/favicon.png" />
+    <link rel="canonical" href="https://codywinchester.com/progress" />
+    <meta name="description" content="A progress bar populated by these URL params: part, whole, title. Example: ?part=33&whole=100&title=Pages%20reviewed">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <style>
+      body, html {
+        font-family: Verdana, Arial, sans-serif;
+        background-color: white;
+      }
+      h1, div {
+        margin: 0 auto;
+        width: 700px;
+        max-width: 100%;
+      }
+      h1 {
+        margin: 1rem auto;
+      }
+      div {
+        height: 20px;
+        padding: 0.8rem;
+      }
+    </style>
+  </head>
+  <body>
+    <h1></h1>
+    <div></div>
+    <script>
+      if (window.location.search) {
+        const params = new URLSearchParams(window.location.search);
+        const part = params.get('part');
+        const whole = params.get('whole');
+        if (part && whole) {
+          const pct = ((part / whole) * 100).toFixed(2);
+          const hed = document.getElementsByTagName('h1')[0];
+          const bar = document.getElementsByTagName('div')[0];
+          bar.style.border = '1px solid #ccc';
+          ['-moz-', '-webkit-', ''].forEach(x => bar.style.backgroundImage = `${x}linear-gradient(left, #cadceb ${pct}%, #f7f7f7 ${pct}%)`);
+          bar.innerHTML = `${pct}%`
+          const title = params.get('title');
+          if (title) {
+            hed.innerHTML = title;
+          }
+        }
+      }
+    </script>
+  </body>
+</html>
